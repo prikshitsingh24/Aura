@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "aura",
+    "sandbox"
+]
+
+resolver = "2"
+
+
+
