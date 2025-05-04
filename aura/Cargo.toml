@@ -5,3 +5,5 @@ edition = "2024"
 
 [dependencies]
 glfw = "0.59.0"
+gl = "0.14.0"
+

@@ -1,7 +1,9 @@
 use std::sync::Arc;
 use std::sync::Mutex;
 
+use aura::renderer::AuraShapes;
 use aura::window::{AuraEvent,AuraWindow};
+use aura::renderer::AuraRenderer;
 extern crate glfw;
 use glfw::Context; 
 
@@ -10,6 +12,7 @@ fn main() {
     let event_queue = Arc::new(Mutex::new(AuraEvent::EventQueue::new()));
     let (mut window,mut glfw) = aura_window.create(Arc::clone(&event_queue));
 
+    AuraRenderer::Renderer::initialize(&mut window);
 
     while !window.should_close() {
         glfw.poll_events(); 
@@ -31,6 +34,11 @@ fn main() {
             }
       
         }
+
+        // Render -----------------
+        AuraRenderer::Renderer::fill(0.0, 0.0, 0.0, 0.0);
+        AuraRenderer::Renderer::draw(AuraShapes::Shapes::Pyramid);
+
         window.swap_buffers();
     }
     

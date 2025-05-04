@@ -2,7 +2,7 @@ extern crate glfw;
 
 use std::sync::{Arc, Mutex};
 
-use glfw::{Action, Context, Key};
+use glfw::{Action, Context};
 
 use super::AuraEvent;
 
@@ -23,7 +23,7 @@ impl Window {
 
     pub fn create(&self,  event_queue: Arc<Mutex<AuraEvent::EventQueue>>) -> (glfw::PWindow, glfw::Glfw) {
         let mut glfw = glfw::init(glfw::fail_on_errors).unwrap();
-        let (mut window, events) = glfw.create_window(self.width, self.height, &self.title, glfw::WindowMode::Windowed)
+        let (mut window, _) = glfw.create_window(self.width, self.height, &self.title, glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window.");
         window.set_key_polling(true);
         window.set_mouse_button_polling(true);
