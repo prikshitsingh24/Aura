@@ -2,7 +2,7 @@ extern crate glfw;
 
 use std::sync::{Arc, Mutex};
 
-use glfw::{Action, Context};
+use glfw::{Action, Context, WindowHint};
 
 use super::AuraEvent;
 
@@ -25,11 +25,13 @@ impl Window {
         let mut glfw = glfw::init(glfw::fail_on_errors).unwrap();
         let (mut window, _) = glfw.create_window(self.width, self.height, &self.title, glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window.");
+        glfw.window_hint(WindowHint::Samples(Some(4)));
         window.set_key_polling(true);
         window.set_mouse_button_polling(true);
+        window.set_framebuffer_size_polling(true);
         window.set_cursor_pos_polling(true);
 
-
+        
         let queue_for_key = Arc::clone(&event_queue);
         window.set_key_callback(move | _, key, scancode, action: Action, mods | {
             if let Ok(mut q) = queue_for_key.lock() {
@@ -56,6 +58,14 @@ impl Window {
         window.set_cursor_pos_callback(move | _, x, y  | {
             if let Ok(mut q) = queue_for_mouse_move.lock() {
                 q.push_back(AuraEvent::Event::MouseMoved(x, y))
+            }
+        });
+
+
+        let queue_for_window_resize = Arc::clone(&event_queue);
+        window.set_framebuffer_size_callback(move |_, width, height | {
+            if let Ok(mut q) = queue_for_window_resize.lock() {
+                q.push_back(AuraEvent::Event::WindowResize(width,height))
             }
         });
 

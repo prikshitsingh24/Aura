@@ -29,6 +29,9 @@ fn main() {
                     AuraEvent::Event::MouseMoved(x,y ) => {
                         print!("Mouse moving {} {} \n",x,y);
                     }
+                    AuraEvent::Event::WindowResize(width, height ) => {
+                        AuraRenderer::Renderer::resize(width, height);
+                    }
                     _ => {}
                 }
             }

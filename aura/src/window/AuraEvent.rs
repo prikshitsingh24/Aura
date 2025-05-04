@@ -7,7 +7,8 @@ pub enum Event {
     MouseButtonRepeat(glfw::MouseButton,glfw::Action,glfw::Modifiers),
     KeyPressed(glfw::Key,glfw::Scancode,glfw::Action,glfw::Modifiers),
     KeyReleased(glfw::Key,glfw::Scancode,glfw::Action,glfw::Modifiers),
-    KeyRepeat(glfw::Key,glfw::Scancode,glfw::Action,glfw::Modifiers)
+    KeyRepeat(glfw::Key,glfw::Scancode,glfw::Action,glfw::Modifiers),
+    WindowResize(i32,i32)
 }
 
 

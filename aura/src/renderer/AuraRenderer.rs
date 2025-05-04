@@ -5,7 +5,7 @@ use super::AuraShapes::Shapes;
 extern crate gl;
 extern crate glfw;
 use super::utils::{self, VertexProcessor, Shader};
-use gl::types::*;
+
 
 pub struct Renderer {}
 
@@ -13,6 +13,15 @@ pub struct Renderer {}
 impl Renderer {
     pub fn initialize(window: &mut glfw::PWindow) {
         gl::load_with(|s| window.get_proc_address(s) as *const _);
+        unsafe {
+            gl::Enable(gl::MULTISAMPLE);
+        }
+    }
+
+    pub fn resize(width:i32,height:i32) {
+        unsafe{
+            gl::Viewport(0, 0, width, height);
+        }
     }
 
     pub fn fill(red:f32,blue:f32,green:f32,alpha:f32) {
